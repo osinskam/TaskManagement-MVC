@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,16 +10,16 @@ using nnnn.Models;
 
 namespace nnnn.Controllers
 {
-    public class TasksController : Controller
+    public class Tasks1Controller : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public TasksController(ApplicationDbContext context)
+        public Tasks1Controller(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Tasks
+        // GET: Tasks1
         public async Task<IActionResult> Index()
         {
               return _context.Task != null ? 
@@ -28,19 +27,7 @@ namespace nnnn.Controllers
                           Problem("Entity set 'ApplicationDbContext.Task'  is null.");
         }
 
-        //Get: Tasks/ShowSearchForm
-        public async Task<IActionResult> ShowSearchForm()
-        {
-            return View();
-        }
-
-        //Post: Tasks/ShowSearchResults
-        public async Task<IActionResult> ShowSearchResults(String SearchPhrase)
-        {
-            return View("Index", await _context.Task.Where( t => t.Information.Contains(SearchPhrase)).ToListAsync());
-        }
-
-        // GET: Tasks/Details/5
+        // GET: Tasks1/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Task == null)
@@ -58,20 +45,18 @@ namespace nnnn.Controllers
             return View(task);
         }
 
-        // GET: Tasks/Create
-
-        [Authorize]
+        // GET: Tasks1/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Tasks/Create
+        // POST: Tasks1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Information,Category,Status,Assignee")] Models.Task task)
+        public async Task<IActionResult> Create([Bind("Id,TaskInfo,TaskCategory,Status,Assignee")] Models.Task task)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +67,7 @@ namespace nnnn.Controllers
             return View(task);
         }
 
-        // GET: Tasks/Edit/5
+        // GET: Tasks1/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Task == null)
@@ -98,12 +83,12 @@ namespace nnnn.Controllers
             return View(task);
         }
 
-        // POST: Tasks/Edit/5
+        // POST: Tasks1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Information,Category,Status,Assignee")] Models.Task task)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,TaskInfo,TaskCategory,Status,Assignee")] Models.Task task)
         {
             if (id != task.Id)
             {
@@ -133,7 +118,7 @@ namespace nnnn.Controllers
             return View(task);
         }
 
-        // GET: Tasks/Delete/5
+        // GET: Tasks1/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Task == null)
@@ -151,7 +136,7 @@ namespace nnnn.Controllers
             return View(task);
         }
 
-        // POST: Tasks/Delete/5
+        // POST: Tasks1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

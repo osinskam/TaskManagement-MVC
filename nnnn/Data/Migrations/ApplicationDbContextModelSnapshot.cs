@@ -8,7 +8,7 @@ using nnnn.Data;
 
 #nullable disable
 
-namespace nnnn.Migrations
+namespace TaskManageApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -227,6 +227,12 @@ namespace nnnn.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Assignee")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaskCategory")
                         .HasColumnType("nvarchar(max)");

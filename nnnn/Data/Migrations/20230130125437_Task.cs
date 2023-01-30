@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace nnnn.Migrations
+namespace TaskManageApp.Migrations
 {
     /// <inheritdoc />
     public partial class Task : Migration

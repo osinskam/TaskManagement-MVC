@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace nnnn.Migrations
+namespace TaskManageApp.Migrations
 {
     /// <inheritdoc />
     public partial class initialsetup : Migration
@@ -57,7 +57,9 @@ namespace nnnn.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TaskInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TaskCategory = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    TaskCategory = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Assignee = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

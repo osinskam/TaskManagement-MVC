@@ -9,11 +9,11 @@ using nnnn.Data;
 
 #nullable disable
 
-namespace nnnn.Migrations
+namespace TaskManageApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230130093754_Task")]
-    partial class Task
+    [Migration("20230130125417_initialsetup")]
+    partial class initialsetup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -230,6 +230,12 @@ namespace nnnn.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Assignee")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaskCategory")
                         .HasColumnType("nvarchar(max)");
