@@ -54,6 +54,7 @@ namespace nnnn
             app.UseRouting();
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
 
@@ -63,6 +64,10 @@ namespace nnnn
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+
         }
+
     }
+
 }

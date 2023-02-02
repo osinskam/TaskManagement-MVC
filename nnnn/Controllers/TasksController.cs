@@ -60,7 +60,7 @@ namespace nnnn.Controllers
 
         // GET: Tasks/Create
 
-        [Authorize]
+        // [Authorize]
         public IActionResult Create()
         {
             return View();
