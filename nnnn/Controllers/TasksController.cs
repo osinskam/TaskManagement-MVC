@@ -21,6 +21,8 @@ namespace nnnn.Controllers
         }
 
         // GET: Tasks
+        [Authorize]
+
         public async Task<IActionResult> Index()
         {
               return _context.Task != null ? 
@@ -28,6 +30,7 @@ namespace nnnn.Controllers
                           Problem("Entity set 'ApplicationDbContext.Task'  is null.");
         }
 
+        [Authorize]
         //Get: Tasks/ShowSearchForm
         public async Task<IActionResult> ShowSearchForm()
         {
@@ -37,7 +40,7 @@ namespace nnnn.Controllers
         //Post: Tasks/ShowSearchResults
         public async Task<IActionResult> ShowSearchResults(String SearchPhrase)
         {
-            return View("Index", await _context.Task.Where( t => t.Information.Contains(SearchPhrase)).ToListAsync());
+            return View("Index", await _context.Task.Where( t => t.Title.Contains(SearchPhrase)).ToListAsync());
         }
 
         // GET: Tasks/Details/5
@@ -60,7 +63,6 @@ namespace nnnn.Controllers
 
         // GET: Tasks/Create
 
-        // [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -71,7 +73,7 @@ namespace nnnn.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Information,Category,Status,Assignee")] Models.Task task)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Category,Status,Assignee")] Models.Task task)
         {
             if (ModelState.IsValid)
             {
@@ -103,7 +105,7 @@ namespace nnnn.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Information,Category,Status,Assignee")] Models.Task task)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Category,Status,Assignee")] Models.Task task)
         {
             if (id != task.Id)
             {

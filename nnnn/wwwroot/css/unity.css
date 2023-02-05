@@ -2788,6 +2788,7 @@ textarea.form-control-lg {
         background-color: #aea79f;
     }
 
+
 .form-floating {
     position: relative;
 }
@@ -12474,4 +12475,12 @@ textarea.form-control-lg {
 
 .badge.bg-light {
     color: #333;
+}
+
+.center-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
 }
