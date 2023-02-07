@@ -4,21 +4,40 @@
     ViewData["Title"] = "Index";
 }
 
-<div style="margin-top: 2em" </div>
-<h1>Search for a task</h1>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="ShowSearchResults">
 
-            <div class="form-group">
-                <label for="SearchPhrase" class="control-label"></label>
-                <input name="SearchPhrase" class="form-control" />
-            </div>
-            <div class="form-group" style="margin-top: 2em">
-                <input type="submit" value="Search" class="btn btn-dark" />
-            </div>
-        </form>
+<div style="margin-top: 2em">
+    <h1>Search for a task</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="ShowSearchResults">
+                <div class="form-group">
+                    <label for="SearchCriteria" class="control-label">Search Criteria</label>
+                    <select name="SearchCriteria" class="form-control">
+                        <option value="Title">Title</option>
+                        <option value="Description">Description</option>
+                        <option value="Category">Category</option>
+                        <option value="Status">Status</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="SearchPhrase" class="control-label">Search Phrase</label>
+                    <input name="SearchPhrase" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="DueDateFrom">Due Date From</label>
+                    <input type="date" name="DueDateFrom" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="DueDateTo">Due Date To</label>
+                    <input type="date" name="DueDateTo" class="form-control" />
+                </div>
+                <div class="form-group" style="margin-top: 2em">
+                    <input type="submit" value="Search" class="btn btn-dark" />
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

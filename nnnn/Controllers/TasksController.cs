@@ -35,10 +35,29 @@ namespace nnnn.Controllers
         }
 
         //Post: Tasks/ShowSearchResults
-        public async Task<IActionResult> ShowSearchResults(String SearchPhrase)
+        public async Task<IActionResult> ShowSearchResults(String SearchCriteria, string SearchPhrase, string Description, string Category, string Status)
         {
-            return View("Index", await _context.Task.Where( t => t.Title.Contains(SearchPhrase)).ToListAsync());
+            if (SearchCriteria == "Title")
+            {
+                return View("Index", await _context.Task.Where(t => t.Title.Contains(SearchPhrase)
+                                                                    && (string.IsNullOrEmpty(Category) || t.Category == Category)
+                                                                    && (string.IsNullOrEmpty(Description) || t.Description == Description)
+                                                                    && (string.IsNullOrEmpty(Status) || t.Status == Status))
+                                                                    .ToListAsync());
+            }
+            else if (SearchCriteria == "Description")
+            {
+                return View("Index", await _context.Task.Where(t => t.Description.Contains(SearchPhrase)
+                                                                    && (string.IsNullOrEmpty(Category) || t.Category == Category)
+                                                                    && (string.IsNullOrEmpty(Status) || t.Status == Status))
+                                                                    .ToListAsync());
+            }
+            else
+            {
+                return View("Index", await _context.Task.ToListAsync());
+            }
         }
+
 
         // GET: Tasks/Details/5
         public async Task<IActionResult> Details(int? id)
