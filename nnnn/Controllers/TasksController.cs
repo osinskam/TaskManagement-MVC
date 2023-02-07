@@ -21,8 +21,6 @@ namespace nnnn.Controllers
         }
 
         // GET: Tasks
-        [Authorize]
-
         public async Task<IActionResult> Index()
         {
               return _context.Task != null ? 
@@ -30,7 +28,6 @@ namespace nnnn.Controllers
                           Problem("Entity set 'ApplicationDbContext.Task'  is null.");
         }
 
-        [Authorize]
         //Get: Tasks/ShowSearchForm
         public async Task<IActionResult> ShowSearchForm()
         {
@@ -63,6 +60,7 @@ namespace nnnn.Controllers
 
         // GET: Tasks/Create
 
+        [Authorize]
         public IActionResult Create()
         {
             return View();
