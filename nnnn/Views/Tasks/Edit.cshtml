@@ -27,10 +27,13 @@
                 <label asp-for="Category" class="control-label"></label>
                 <input asp-for="Category" class="form-control" />
                 <span asp-validation-for="Category" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
+                <select asp-for="Status" class="form-control">
+                    <option value="To be done">To be done</option>
+                    <option value="In progress">In progress</option>
+                    <option value="Done">Done</option>
+                </select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,8 +41,8 @@
                 <input asp-for="Assignee" class="form-control" />
                 <span asp-validation-for="Assignee" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="form-group" style="margin-top: 2em">
+                <input type="submit" value="Save" class="btn btn-dark" />
             </div>
         </form>
     </div>

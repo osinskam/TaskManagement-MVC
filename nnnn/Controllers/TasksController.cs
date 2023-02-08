@@ -94,6 +94,12 @@ namespace nnnn.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (string.IsNullOrEmpty(task.Title))
+                {
+                    ModelState.AddModelError("Title", "Title is required.");
+                    return View(task);
+                }
+
                 _context.Add(task);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
