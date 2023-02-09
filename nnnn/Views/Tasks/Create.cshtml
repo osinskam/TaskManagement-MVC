@@ -1,4 +1,5 @@
-﻿@model nnnn.Models.Task
+﻿@using Microsoft.AspNetCore.Identity;
+@model nnnn.Models.Task
 
 @{
     ViewData["Title"] = "Create";
@@ -27,16 +28,22 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="Category" class="control-label"></label>
-                            <input asp-for="Category" class="form-control border-dark mb-3" />
+                            <select asp-for="Category" class="form-control border-dark mb-3">
+                                <option value="Administrative">Administrative</option>
+                                <option value="Operational">Operational</option>
+                                <option value="Meeting">Meeting</option>
+                                <option value="Training">Training</option>
+                                <option value="Other">Other</option>
+                            </select> 
                             <span asp-validation-for="Category" class="text-danger"></span>
                         </div>
+
                         <div class="form-group">
                             <label asp-for="Status" class="control-label"></label>
                             <select asp-for="Status" class="form-control border-dark mb-3">
                                 <option value="To be done">To be done</option>
                                 <option value="In progress">In progress</option>
-                                <option value="Done">Done
-                                </option>
+                                <option value="Done">Done</option>
                             </select>
                             <span asp-validation-for="Status" class="text-danger"></span>
                         </div>
@@ -45,6 +52,12 @@
                             <label asp-for="Assignee" class="control-label"></label>
                             <input asp-for="Assignee" class="form-control border-dark mb-3" />
                             <span asp-validation-for="Assignee" class="text-danger"></span>
+                            <fieldset class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onclick="assignToMe()">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Assign to me
+                                </label>
+                            </fieldset>
                         </div>
                         <div class="form-group" style="margin-top: 2em">
                             <input type="submit" value="Create" class="btn btn-dark" />
@@ -56,10 +69,22 @@
     </div>
 </div>
 
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+<script>
+function assignToMe() {
+    // Replace "LoggedInUser" with the actual value of the currently logged in user's name
+        const loggedInUser = "@User.Identity.Name";
+        const assigneeField = document.getElementById("Assignee");
+    if (document.getElementById("flexCheckDefault").checked) {
+        assigneeField.value = loggedInUser;
+    } else {
+        assigneeField.value = "";
+    }
+}
+</script>
 
 @section Scripts {
     @{

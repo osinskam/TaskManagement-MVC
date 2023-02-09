@@ -103,8 +103,8 @@ namespace nnnn.Controllers
                 _context.Add(task);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            return View(task);
+                }
+                return View(task);
         }
 
         // GET: Tasks/Edit/5
