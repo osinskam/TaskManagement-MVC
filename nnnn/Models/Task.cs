@@ -9,13 +9,16 @@ namespace nnnn.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Title is required.")]
-        public string? Title { get; set; }
+        public string Title { get; set; }
 
         public string? Description { get; set; }
+
+        public string? Team { get; set; }
 
         public string? Category { get; set; }
         public string? Status { get; set; }
         public string? Assignee { get; set; }
+        public DateTime? DueDate { get; set; }
 
 
 

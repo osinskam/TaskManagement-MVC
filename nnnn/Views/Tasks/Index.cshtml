@@ -12,7 +12,6 @@
 </p>
 <table class="table">
     <thead>
-        <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
@@ -28,20 +27,31 @@
             <th>
                 @Html.DisplayNameFor(model => model.Assignee)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DueDate)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                    @Html.DisplayFor(modelItem => item.Title)
+            <tr class="@{
+                if (item.Status == "Done") {
+                        @:table-success
+                } else if (item.Status == "In Progress") {
+                        @:table-primary
+                } else if (item.Status == "To be done") {
+                        @:table-warning
+                }
+            }">
+                <td>
+                @Html.DisplayFor(modelItem => item.Title)
             </td>
              @*   <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>*@
             <td>
-                    @Html.DisplayFor(modelItem => item.Category)
+                @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
@@ -49,9 +59,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Assignee)
             </td>
+          <td>
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </td>
             <td>
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pen"></i> Edit</a> |
-                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-text-center"></i> Details</a> |
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pen"></i> Edit</a> 
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-text-center"></i> Details</a> 
                     <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash3"></i> Delete</a>
             </td>
         </tr>

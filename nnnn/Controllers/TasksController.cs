@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using nnnn.Models;
 
 namespace nnnn.Controllers
 {
+
     public class TasksController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,12 +23,19 @@ namespace nnnn.Controllers
         }
 
         // GET: Tasks
+
         public async Task<IActionResult> Index()
         {
-              return _context.Task != null ? 
-                          View(await _context.Task.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Task'  is null.");
+            if (_context.Task == null)
+            {
+                return NotFound("Entity set 'ApplicationDbContext.Task' is null.");
+            }
+            var tasks = await _context.Task.OrderByDescending(t => t.Status != "Done").ThenBy(t => t.Status == "Done").ThenByDescending(t => t.DueDate).ToListAsync();
+
+            return View(tasks);
         }
+
+        //Get:
 
         //Get: Tasks/ShowSearchForm
         public async Task<IActionResult> ShowSearchForm()
@@ -52,6 +61,20 @@ namespace nnnn.Controllers
                                                                     && (string.IsNullOrEmpty(Status) || t.Status == Status))
                                                                     .ToListAsync());
             }
+            else if (SearchCriteria == "Category")
+            {
+                return View("Index", await _context.Task.Where(t => t.Category.Contains(SearchPhrase)
+                                                                    && (string.IsNullOrEmpty(Description) || t.Description == Description)
+                                                                    && (string.IsNullOrEmpty(Status) || t.Status == Status))
+                                                                    .ToListAsync());
+                }
+            else if (SearchCriteria == "Status")
+                {
+                    return View("Index", await _context.Task.Where(t => t.Status.Contains(SearchPhrase)
+                                                                        && (string.IsNullOrEmpty(Description) || t.Description == Description)
+                                                                        && (string.IsNullOrEmpty(Category) || t.Category == Category))
+                                                                        .ToListAsync());
+                }
             else
             {
                 return View("Index", await _context.Task.ToListAsync());
@@ -90,7 +113,7 @@ namespace nnnn.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Category,Status,Assignee")] Models.Task task)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Category,Status,Assignee,DueDate")] Models.Task task)
         {
             if (ModelState.IsValid)
             {
@@ -99,6 +122,15 @@ namespace nnnn.Controllers
                     ModelState.AddModelError("Title", "Title is required.");
                     return View(task);
                 }
+                DateTime dueDate;
+                if (!DateTime.TryParse(task.DueDate.ToString(), out dueDate))
+                {
+                    ModelState.AddModelError("DueDate", "Due date is not in a correct format.");
+                    return View(task);
+                }
+
+                task.DueDate = dueDate;
+
 
                 _context.Add(task);
                 await _context.SaveChangesAsync();
@@ -123,12 +155,13 @@ namespace nnnn.Controllers
             return View(task);
         }
 
-        // POST: Tasks/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+
+    // POST: Tasks/Edit/5
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Category,Status,Assignee")] Models.Task task)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Category,Status,Assignee,DueDate")] Models.Task task)
         {
             if (id != task.Id)
             {

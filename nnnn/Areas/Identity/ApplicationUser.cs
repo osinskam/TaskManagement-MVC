@@ -12,5 +12,8 @@ namespace nnnn.Areas.Identity
         [PersonalData]
         [Column(TypeName = "nvarchar(50)")]
         public string LastName { get; set; }
+
+        [Column(TypeName = "nvarchar(30)")]
+        public string Team { get; set; }
     }
 }

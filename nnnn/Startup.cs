@@ -12,6 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using nnnn.Areas.Identity;
+using Microsoft.AspNetCore.Identity;
+
 
 namespace nnnn
 {
@@ -31,9 +34,21 @@ namespace nnnn
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
+
+        //Identity
+
+    
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -49,6 +64,7 @@ namespace nnnn
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -56,6 +72,8 @@ namespace nnnn
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
 
             app.UseEndpoints(endpoints =>

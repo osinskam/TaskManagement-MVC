@@ -5,13 +5,15 @@
     ViewData["Title"] = "Create";
 }
 
-
-<div class="container" style=" margin-top: 2em"><h1>Create</h1></div>
-<div class="container" style=" margin-top: 2em"><h3>New task</h3></div>
+<div class="container" style="margin-top: 2em"><h1>Create</h1></div>
+<div class="container" style=" margin-top: 2em">
+    <h5>This page allows you to create a new task for your team. </h5>
+    <h5>Please provide the required information in the form fields below 🚀</h5>
+</div>
 
 <div class="container">
     <div class="row my-5">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <div class="card border-dark mb-3">
                 <div class="card-body">
                     <form asp-action="Create">
@@ -37,6 +39,17 @@
                             </select> 
                             <span asp-validation-for="Category" class="text-danger"></span>
                         </div>
+                        <div class="form-group">
+                            <label asp-for="Team" class="control-label"></label>
+                            <select asp-for="Team" class="form-control border-dark mb-3">
+                                <option value="HR">HR</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Clients">Clients</option>
+                                <option value="Managers">Managers</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span asp-validation-for="Team" class="text-danger"></span>
+                        </div>
 
                         <div class="form-group">
                             <label asp-for="Status" class="control-label"></label>
@@ -59,6 +72,11 @@
                                 </label>
                             </fieldset>
                         </div>
+                        <div class="form-group">
+                            <label asp-for="DueDate" class="control-label"></label>
+                            <input asp-for="DueDate" class="form-control border-dark mb-3" />
+                            <span asp-validation-for="DueDate" class="text-danger"></span>
+                        </div>
                         <div class="form-group" style="margin-top: 2em">
                             <input type="submit" value="Create" class="btn btn-dark" />
                         </div>
@@ -69,22 +87,27 @@
     </div>
 </div>
 
+
+
+<script>
+    function assignToMe() {
+        // Replace "LoggedInUser" with the actual value of the currently logged in user's name
+        const loggedInUser = "@User.Identity.Name";
+        const assigneeField = document.getElementById("Assignee");
+        if (document.getElementById("flexCheckDefault").checked) {
+            assigneeField.value = loggedInUser;
+        } else {
+            assigneeField.value = "";
+        }
+    }
+</script>
+
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
-<script>
-function assignToMe() {
-    // Replace "LoggedInUser" with the actual value of the currently logged in user's name
-        const loggedInUser = "@User.Identity.Name";
-        const assigneeField = document.getElementById("Assignee");
-    if (document.getElementById("flexCheckDefault").checked) {
-        assigneeField.value = loggedInUser;
-    } else {
-        assigneeField.value = "";
-    }
-}
-</script>
+
 
 @section Scripts {
     @{
